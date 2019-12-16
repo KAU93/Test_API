@@ -6,7 +6,7 @@ def connectAPI (text):
     urlAPI = URL.format(text)
     return requests.get(urlAPI)
 
-
+# Тест на позитивный статус
 def Test1():
     response = connectAPI("Менеджер по продажам")
     if response.status_code == 200:
@@ -14,6 +14,7 @@ def Test1():
     else:
         print("Test1 Bad")
 
+# Тест на ввод пустого запроса
 def Test2():
     response = connectAPI("")
     if response.status_code == 200:
@@ -24,6 +25,7 @@ def Test2():
     else:
          print("Test2 Bad")
 
+# Тест на превышение длинны URL
 def Test3():
     response = connectAPI("Работник склада" * 800)
     if response.status_code == 414:
@@ -31,7 +33,7 @@ def Test3():
     else:
         print("Test3 Bad")
   
-
+# Тест на граничный переход
 def Test3_1():
     response = connectAPI("Работник склада" * 750)
     if response.status_code == 502:
@@ -40,7 +42,7 @@ def Test3_1():
         print("Test3_1 Bad")
         print(response)
         
-
+# Тест на ввод спецсимволов
 def Test4():
     response = connectAPI("!!!")
     if response.status_code == 200:
@@ -51,6 +53,7 @@ def Test4():
     else:
         print("Test4 Bad")
 
+# Тест на поиск одного из слов
 def Test5():
     response = connectAPI("!программист OR !уборщица")
     if response.status_code == 200:
@@ -61,6 +64,7 @@ def Test5():
     else:
         print("Test5 Bad")
 
+# Тест на SQL инъекцию
 def Test6():
     response = connectAPI("SELECT compani_id FROM table;")
     if response.status_code == 200:
